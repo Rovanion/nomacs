@@ -128,6 +128,7 @@ file(GLOB CORE_HEADERS "src/DkCore/*.h")
 
 # gather information for building
 include_directories (
+	${OPENCV_INCLUDE_DIRS}
 	${EXIV2_INCLUDE_DIRS}
 	${LIBRAW_INCLUDE_DIRECTORY}
 	${CMAKE_BINARY_DIR}
