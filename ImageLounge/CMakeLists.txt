@@ -30,6 +30,7 @@ set(NOMACS_BUILD_DIRECTORY ${CMAKE_BINARY_DIR})
 # if python is available, we can run additional build scripts (i.e. versioning)
 find_package(Python QUIET)
 
+
 # include macros needed
 include("cmake/Utils.cmake")
 
@@ -179,9 +180,9 @@ endif()
 if (ENABLE_INCREMENTER AND Python_FOUND)
 
     add_custom_command(
-        TARGET ${DLL_CORE_NAME} PRE_BUILD 
+        TARGET ${DLL_CORE_NAME} PRE_BUILD
         COMMAND ${Python_EXECUTABLE}
-        ${CMAKE_CURRENT_SOURCE_DIR}/../scripts/versionincrement.py 
+        ${CMAKE_CURRENT_SOURCE_DIR}/../scripts/versionincrement.py
         ${NOMACS_VERSION})
 
     message(STATUS "build incrementer enabled...")
@@ -189,18 +190,18 @@ if (ENABLE_INCREMENTER AND Python_FOUND)
 endif()
 
 if (Python_FOUND)
-    
+
     add_custom_command(
-        TARGET ${DLL_CORE_NAME} PRE_BUILD 
+        TARGET ${DLL_CORE_NAME} PRE_BUILD
         COMMAND ${Python_EXECUTABLE}
-        ${CMAKE_CURRENT_SOURCE_DIR}/../scripts/versionupdate.py 
+        ${CMAKE_CURRENT_SOURCE_DIR}/../scripts/versionupdate.py
         ${CMAKE_BINARY_DIR}/DkVersion.h)
 
     # I am having issues with the PRE_BUILD above
     # if version increment is off, we just need to run the update once (for version won't change)
     # so let's do that:
     execute_process(COMMAND ${Python_EXECUTABLE}
-            ${CMAKE_CURRENT_SOURCE_DIR}/../scripts/versionupdate.py 
+            ${CMAKE_CURRENT_SOURCE_DIR}/../scripts/versionupdate.py
             ${CMAKE_BINARY_DIR}/DkVersion.h)
 
 else()
