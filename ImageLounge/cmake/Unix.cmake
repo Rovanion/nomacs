@@ -17,6 +17,9 @@ option(USE_SYSTEM_LIBQPSD "Use qpsd libary provided by system" OFF)
 
 # search for pkgConfig, needed for exvi2, libraw, and older OpenCV versions
 find_package(PkgConfig)
+if(ENABLE_OPENCV)
+	find_package(OpenCV REQUIRED core imgproc)
+endif()
 
 # search for exiv2
 pkg_check_modules(EXIV2  exiv2>=0.20)
@@ -38,7 +41,6 @@ endif(NOT EXIV2_FOUND)
 # search for opencv
 unset(OpenCV_FOUND CACHE)
 if(ENABLE_OPENCV)
-	find_package(OpenCV REQUIRED core imgproc)
 	if (NOT OpenCV_LIBRARIES) # OpenCV_FOUND can not be used since it is set in Ubuntu 12.04 (without finding opencv)
 		# Older OpenCV versions only supplied pkg-config files
 		if(PKG_CONFIG_FOUND)
